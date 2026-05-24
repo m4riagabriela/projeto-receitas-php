@@ -53,11 +53,46 @@ class Router {
 
             break;
 
+            case 'minhas-receitas':
+
+    require_once '../app/controllers/ReceitaController.php';
+
+    $controller = new ReceitaController();
+    $controller->minhas();
+
+break;
+
             default:
 
                 echo "Página não encontrada.";
 
             break;
+
+            case 'criar-receita':
+
+    require_once '../app/controllers/ReceitaController.php';
+
+    $controller = new ReceitaController();
+    $controller->criar();
+
+break;
+
+case 'salvar-receita':
+
+    require_once '../app/controllers/ReceitaController.php';
+
+    $controller = new ReceitaController();
+    $controller->salvar();
+
+break;
+case 'receitas':
+
+    require_once '../app/controllers/ReceitaController.php';
+
+    $controller = new ReceitaController();
+    $controller->index();
+
+break;
         }
     }
 }
