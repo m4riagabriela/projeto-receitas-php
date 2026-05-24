@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/05/2026 às 03:04
+-- Tempo de geração: 24/05/2026 às 03:59
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `receitas_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `receitas`
+--
+
+CREATE TABLE `receitas` (
+  `id` int(11) NOT NULL,
+  `titulo` varchar(150) NOT NULL,
+  `descricao` text NOT NULL,
+  `modo_preparo` text NOT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `receitas`
+--
+
+INSERT INTO `receitas` (`id`, `titulo`, `descricao`, `modo_preparo`, `usuario_id`, `created_at`) VALUES
+(1, 'Bolos', 'rggre', 'erethth', 1, '2026-05-24 01:26:23');
 
 -- --------------------------------------------------------
 
@@ -47,6 +69,13 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`, `created_at`) VALUES
 --
 
 --
+-- Índices de tabela `receitas`
+--
+ALTER TABLE `receitas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`);
+
+--
 -- Índices de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -58,10 +87,26 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de tabela `receitas`
+--
+ALTER TABLE `receitas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `receitas`
+--
+ALTER TABLE `receitas`
+  ADD CONSTRAINT `receitas_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
