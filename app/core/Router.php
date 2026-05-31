@@ -53,12 +53,66 @@ class Router {
 
             break;
 
+            case 'criar-receita':
+
+                require_once '../app/controllers/ReceitaController.php';
+
+                $controller = new ReceitaController();
+                $controller->criar();
+
+            break;
+
+            case 'salvar-receita':
+
+                require_once '../app/controllers/ReceitaController.php';
+
+                $controller = new ReceitaController();
+                $controller->salvar();
+
+            break;
+
+            case 'receitas':
+
+                require_once '../app/controllers/ReceitaController.php';
+
+                $controller = new ReceitaController();
+                $controller->index();
+
+            break;
+
             case 'minhas-receitas':
+
+                require_once '../app/controllers/ReceitaController.php';
+
+                $controller = new ReceitaController();
+                $controller->minhas();
+
+            break;
+
+            case 'editar-receita':
 
     require_once '../app/controllers/ReceitaController.php';
 
     $controller = new ReceitaController();
-    $controller->minhas();
+    $controller->editar();
+
+    break;
+
+    case 'atualizar-receita':
+
+    require_once '../app/controllers/ReceitaController.php';
+
+    $controller = new ReceitaController();
+    $controller->atualizar();
+
+    break;
+
+    case 'excluir-receita':
+
+    require_once '../app/controllers/ReceitaController.php';
+
+    $controller = new ReceitaController();
+    $controller->excluir();
 
 break;
 
@@ -67,32 +121,6 @@ break;
                 echo "Página não encontrada.";
 
             break;
-
-            case 'criar-receita':
-
-    require_once '../app/controllers/ReceitaController.php';
-
-    $controller = new ReceitaController();
-    $controller->criar();
-
-break;
-
-case 'salvar-receita':
-
-    require_once '../app/controllers/ReceitaController.php';
-
-    $controller = new ReceitaController();
-    $controller->salvar();
-
-break;
-case 'receitas':
-
-    require_once '../app/controllers/ReceitaController.php';
-
-    $controller = new ReceitaController();
-    $controller->index();
-
-break;
         }
     }
 }

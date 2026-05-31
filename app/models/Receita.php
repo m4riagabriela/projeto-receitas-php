@@ -30,34 +30,73 @@ class Receita {
 
         return $stmt->execute();
     }
+
     public function listar() {
 
-    $sql = "SELECT receitas.*, usuarios.nome AS autor
-            FROM receitas
-            JOIN usuarios
-            ON receitas.usuario_id = usuarios.id
+        $sql = "SELECT receitas.*, usuarios.nome AS autor
+                FROM receitas
+                JOIN usuarios
+                ON receitas.usuario_id = usuarios.id
+                ORDER BY receitas.created_at DESC";
 
-            ORDER BY receitas.created_at DESC";
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function minhasReceitas($usuario_id) {
+
+        $sql = "SELECT *
+                FROM receitas
+                WHERE usuario_id = :usuario_id
+                ORDER BY created_at DESC";
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->bindValue(':usuario_id', $usuario_id);
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function buscarPorId($id) {
+
+    $sql = "SELECT * FROM receitas WHERE id = :id";
 
     $stmt = $this->pdo->prepare($sql);
 
+    $stmt->bindValue(':id', $id);
+
     $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}public function atualizar($id, $titulo, $descricao, $modo_preparo) {
 
-    }public function minhasReceitas($usuario_id) {
-
-    $sql = "SELECT * FROM receitas
-            WHERE usuario_id = :usuario_id
-
-            ORDER BY created_at DESC";
+    $sql = "UPDATE receitas
+            SET titulo = :titulo,
+                descricao = :descricao,
+                modo_preparo = :modo_preparo
+            WHERE id = :id";
 
     $stmt = $this->pdo->prepare($sql);
 
-    $stmt->bindValue(':usuario_id', $usuario_id);
+    $stmt->bindValue(':id', $id);
+    $stmt->bindValue(':titulo', $titulo);
+    $stmt->bindValue(':descricao', $descricao);
+    $stmt->bindValue(':modo_preparo', $modo_preparo);
 
-    $stmt->execute();
+    return $stmt->execute();
+}
+public function excluir($id) {
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "DELETE FROM receitas WHERE id = :id";
+
+    $stmt = $this->pdo->prepare($sql);
+
+    $stmt->bindValue(':id', $id);
+
+    return $stmt->execute();
 }
 }

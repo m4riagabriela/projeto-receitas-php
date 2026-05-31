@@ -8,7 +8,6 @@ class ReceitaController extends Controller {
     public function criar() {
 
         if(!isset($_SESSION['usuario'])) {
-
             header('Location: ?url=login');
             exit;
         }
@@ -35,8 +34,8 @@ class ReceitaController extends Controller {
                 $usuario_id
             );
 
-           header('Location: ?url=receitas');
-exit;
+            header('Location: ?url=receitas');
+            exit;
         }
     }
 
@@ -49,24 +48,66 @@ exit;
         $this->view('receitas', [
             'receitas' => $receitas
         ]);
-
-       } public function minhas() {
-
-    if(!isset($_SESSION['usuario'])) {
-
-        header('Location: ?url=login');
-        exit;
     }
+
+    public function minhas() {
+
+        if(!isset($_SESSION['usuario'])) {
+            header('Location: ?url=login');
+            exit;
+        }
+
+        $receita = new Receita();
+
+        $receitas = $receita->minhasReceitas(
+            $_SESSION['usuario']['id']
+        );
+
+        $this->view('minhas-receitas', [
+            'receitas' => $receitas
+        ]);
+    }
+    public function editar() {
+
+    $id = $_GET['id'];
 
     $receita = new Receita();
 
-    $receitas = $receita->minhasReceitas(
-        $_SESSION['usuario']['id']
-    );
+    $dados = $receita->buscarPorId($id);
 
-    $this->view('minhas-receitas', [
-        'receitas' => $receitas
+    $this->view('editar-receita', [
+        'receita' => $dados
     ]);
 }
-    }
+public function atualizar() {
 
+    $id = $_POST['id'];
+
+    $titulo = $_POST['titulo'];
+    $descricao = $_POST['descricao'];
+    $modo_preparo = $_POST['modo_preparo'];
+
+    $receita = new Receita();
+
+    $receita->atualizar(
+        $id,
+        $titulo,
+        $descricao,
+        $modo_preparo
+    );
+
+    header('Location: ?url=minhas-receitas');
+    exit;
+}
+public function excluir() {
+
+    $id = $_GET['id'];
+
+    $receita = new Receita();
+
+    $receita->excluir($id);
+
+    header('Location: ?url=minhas-receitas');
+    exit;
+}
+}
