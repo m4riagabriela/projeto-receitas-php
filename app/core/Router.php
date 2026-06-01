@@ -115,6 +115,14 @@ class Router {
     $controller->excluir();
 
 break;
+        case 'logout':
+
+    require_once '../app/controllers/AuthController.php';
+
+    $controller = new AuthController();
+    $controller->logout();
+
+break;
 
             default:
 

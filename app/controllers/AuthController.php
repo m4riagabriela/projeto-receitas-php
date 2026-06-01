@@ -14,21 +14,29 @@ class AuthController extends Controller {
 
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $nome = $_POST['nome'];
-            $email = $_POST['email'];
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
 
-            $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
 
-            $usuario = new Usuario();
+    $usuario = new Usuario();
 
-            $usuario->cadastrar($nome, $email, $senha);
+    $usuario->cadastrar($nome, $email, $senha);
 
-            echo "Usuário cadastrado com sucesso!";
-        }
+    header('Location: ?url=login');
+    exit;
+}
     }
     public function login() {
 
     $this->view('login');
+}
+    public function logout() {
+
+    session_destroy();
+
+    header('Location: ?url=login');
+    exit;
 }
 
 public function autenticar() {
@@ -42,20 +50,21 @@ public function autenticar() {
 
         $usuario = $usuarioModel->buscarPorEmail($email);
 
-        if($usuario && password_verify($senha, $usuario['senha'])) {
+       if($usuario && password_verify($senha, $usuario['senha'])) {
 
-            $_SESSION['usuario'] = [
-                'id' => $usuario['id'],
-                'nome' => $usuario['nome'],
-                'email' => $usuario['email']
-            ];
+    $_SESSION['usuario'] = [
+        'id' => $usuario['id'],
+        'nome' => $usuario['nome'],
+        'email' => $usuario['email']
+    ];
 
-            echo "Login realizado com sucesso!";
+    header('Location: ?url=home');
+    exit;
+}
 
         } else {
 
             echo "Email ou senha inválidos.";
         }
     }
-}
 }
