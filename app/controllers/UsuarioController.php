@@ -5,7 +5,7 @@ require_once '../app/models/Usuario.php';
 
 class UsuarioController extends Controller {
 
-    // LISTAR USUÁRIOS
+    
     public function index() {
 
         $usuario = new Usuario();
@@ -17,7 +17,7 @@ class UsuarioController extends Controller {
         ]);
     }
 
-    // FORMULÁRIO DE EDIÇÃO
+    
     public function editar() {
 
         $id = $_GET['id'];
@@ -31,7 +31,7 @@ class UsuarioController extends Controller {
         ]);
     }
 
-    // SALVAR ALTERAÇÃO
+    
     public function atualizar() {
 
         $id = $_POST['id'];
@@ -46,7 +46,7 @@ class UsuarioController extends Controller {
         exit;
     }
 
-    // EXCLUIR
+    
     public function excluir() {
 
         $id = $_GET['id'];

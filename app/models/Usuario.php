@@ -48,7 +48,7 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // LISTAR USUÁRIOS
+    
     public function listar() {
 
         $sql = "SELECT * FROM usuarios ORDER BY id DESC";
@@ -60,7 +60,7 @@ class Usuario {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // BUSCAR POR ID
+    
     public function buscarPorId($id) {
 
         $sql = "SELECT * FROM usuarios WHERE id = :id";
@@ -74,7 +74,7 @@ class Usuario {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // ATUALIZAR
+    
     public function atualizar($id, $nome, $email) {
 
         $sql = "UPDATE usuarios

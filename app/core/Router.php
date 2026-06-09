@@ -8,7 +8,7 @@ class Router {
 
         switch($url) {
 
-            // HOME
+           
             case 'home':
 
                 require_once '../app/controllers/HomeController.php';
@@ -18,7 +18,7 @@ class Router {
 
             break;
 
-            // CADASTRO
+           
             case 'cadastro':
 
                 require_once '../app/controllers/AuthController.php';
@@ -37,7 +37,7 @@ class Router {
 
             break;
 
-            // LOGIN
+            
             case 'login':
 
                 require_once '../app/controllers/AuthController.php';
@@ -65,7 +65,7 @@ class Router {
 
             break;
 
-            // RECEITAS
+            
             case 'criar-receita':
 
                 require_once '../app/controllers/ReceitaController.php';
@@ -129,7 +129,7 @@ class Router {
 
             break;
 
-            // USUÁRIOS
+            
             case 'usuarios':
 
                 require_once '../app/controllers/UsuarioController.php';
@@ -166,7 +166,7 @@ class Router {
 
             break;
 
-            // CATEGORIAS
+            
             case 'categorias':
 
                 require_once '../app/controllers/CategoriaController.php';
