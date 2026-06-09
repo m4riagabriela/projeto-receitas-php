@@ -25,6 +25,12 @@
 
     <form action="?url=salvar" method="POST">
 
+    <input
+    type="hidden"
+    name="csrf_token"
+    value="<?= $_SESSION['csrf_token'] ?>"
+>
+
         <input type="text" name="nome" placeholder="Nome">
         <br><br>
 
@@ -32,6 +38,12 @@
         <br><br>
 
         <input type="password" name="senha" placeholder="Senha">
+        <br><br>
+
+        <input type="text" name="cpf" placeholder="CPF" required>
+        <br><br>
+
+        <input type="date" name="data_nascimento" required>
         <br><br>
 
         <button type="submit">

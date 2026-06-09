@@ -24,6 +24,12 @@
 
     <form action="?url=salvar-receita" method="POST">
 
+    <input
+    type="hidden"
+    name="csrf_token"
+    value="<?= $_SESSION['csrf_token'] ?>"
+>
+
         <input type="text"
                name="titulo"
                placeholder="Título">
@@ -36,6 +42,20 @@
         <textarea name="modo_preparo"
                   placeholder="Modo de preparo"></textarea>
         <br><br>
+
+        <label>Categoria</label>
+
+        <select name="categoria_id" required>
+
+        <?php foreach($categorias as $categoria): ?>
+
+        <option value="<?= $categoria['id'] ?>">
+            <?= $categoria['nome'] ?>
+        </option>
+
+        <?php endforeach; ?>
+
+</select>
 
         <button type="submit">
             Salvar Receita

@@ -14,6 +14,7 @@
    <nav>
     <a href="?url=home">Home</a> |
     <a href="?url=receitas">Receitas</a> |
+     <a href="?url=categorias">Categorias</a> |
     <a href="?url=minhas-receitas">Minhas Receitas</a> |
     <a href="?url=criar-receita">Nova Receita</a> |
     <a href="?url=logout">Sair</a>
@@ -33,6 +34,11 @@
     <p>
         <strong>Autor:</strong>
         <?= $r['autor'] ?>
+    </p>
+
+    <p>
+        <strong>Categoria:</strong>
+        <?= $r['categoria'] ?? 'Sem categoria' ?>
     </p>
 
     <p>

@@ -241,3 +241,33 @@ footer {
     padding: 30px;
     color: #6B6B6B;
 }
+
+.container {
+    max-width: 1000px;
+    margin: 40px auto;
+}
+
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+}
+
+.tabela th {
+    background: #7A9E7E;
+    color: white;
+    padding: 12px;
+}
+
+.tabela td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.btn {
+    background: #7A9E7E;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 8px;
+}

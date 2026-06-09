@@ -13,38 +13,45 @@ class Receita {
         $this->pdo = $database->connect();
     }
 
-    public function cadastrar($titulo, $descricao, $modo_preparo, $usuario_id) {
+    public function cadastrar($titulo, $descricao, $modo_preparo, $usuario_id, $categoria_id)
+{
+    $sql = "INSERT INTO receitas
+            (titulo, descricao, modo_preparo, usuario_id, categoria_id)
+            VALUES
+            (:titulo, :descricao, :modo_preparo, :usuario_id, :categoria_id)";
 
-        $sql = "INSERT INTO receitas
-                (titulo, descricao, modo_preparo, usuario_id)
+    $stmt = $this->pdo->prepare($sql);
 
-                VALUES
-                (:titulo, :descricao, :modo_preparo, :usuario_id)";
+    $stmt->bindValue(':titulo', $titulo);
+    $stmt->bindValue(':descricao', $descricao);
+    $stmt->bindValue(':modo_preparo', $modo_preparo);
+    $stmt->bindValue(':usuario_id', $usuario_id);
+    $stmt->bindValue(':categoria_id', $categoria_id);
 
-        $stmt = $this->pdo->prepare($sql);
+    return $stmt->execute();
+}
 
-        $stmt->bindValue(':titulo', $titulo);
-        $stmt->bindValue(':descricao', $descricao);
-        $stmt->bindValue(':modo_preparo', $modo_preparo);
-        $stmt->bindValue(':usuario_id', $usuario_id);
+    public function listar()
+{
+    $sql = "SELECT receitas.*,
+                   usuarios.nome AS autor,
+                   categorias.nome AS categoria
 
-        return $stmt->execute();
-    }
+            FROM receitas
 
-    public function listar() {
+            JOIN usuarios
+            ON receitas.usuario_id = usuarios.id
 
-        $sql = "SELECT receitas.*, usuarios.nome AS autor
-                FROM receitas
-                JOIN usuarios
-                ON receitas.usuario_id = usuarios.id
-                ORDER BY receitas.created_at DESC";
+            LEFT JOIN categorias
+            ON receitas.categoria_id = categorias.id
 
-        $stmt = $this->pdo->prepare($sql);
+            ORDER BY receitas.created_at DESC";
 
-        $stmt->execute();
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     public function minhasReceitas($usuario_id) {
 
@@ -72,12 +79,13 @@ class Receita {
     $stmt->execute();
 
     return $stmt->fetch(PDO::FETCH_ASSOC);
-}public function atualizar($id, $titulo, $descricao, $modo_preparo) {
-
+}public function atualizar($id, $titulo, $descricao, $modo_preparo, $categoria_id)
+{
     $sql = "UPDATE receitas
             SET titulo = :titulo,
                 descricao = :descricao,
-                modo_preparo = :modo_preparo
+                modo_preparo = :modo_preparo,
+                categoria_id = :categoria_id
             WHERE id = :id";
 
     $stmt = $this->pdo->prepare($sql);
@@ -86,6 +94,7 @@ class Receita {
     $stmt->bindValue(':titulo', $titulo);
     $stmt->bindValue(':descricao', $descricao);
     $stmt->bindValue(':modo_preparo', $modo_preparo);
+    $stmt->bindValue(':categoria_id', $categoria_id);
 
     return $stmt->execute();
 }

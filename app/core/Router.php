@@ -8,6 +8,7 @@ class Router {
 
         switch($url) {
 
+            // HOME
             case 'home':
 
                 require_once '../app/controllers/HomeController.php';
@@ -17,6 +18,7 @@ class Router {
 
             break;
 
+            // CADASTRO
             case 'cadastro':
 
                 require_once '../app/controllers/AuthController.php';
@@ -35,6 +37,7 @@ class Router {
 
             break;
 
+            // LOGIN
             case 'login':
 
                 require_once '../app/controllers/AuthController.php';
@@ -53,6 +56,16 @@ class Router {
 
             break;
 
+            case 'logout':
+
+                require_once '../app/controllers/AuthController.php';
+
+                $controller = new AuthController();
+                $controller->logout();
+
+            break;
+
+            // RECEITAS
             case 'criar-receita':
 
                 require_once '../app/controllers/ReceitaController.php';
@@ -91,38 +104,140 @@ class Router {
 
             case 'editar-receita':
 
-    require_once '../app/controllers/ReceitaController.php';
+                require_once '../app/controllers/ReceitaController.php';
 
-    $controller = new ReceitaController();
-    $controller->editar();
+                $controller = new ReceitaController();
+                $controller->editar();
 
-    break;
+            break;
 
-    case 'atualizar-receita':
+            case 'atualizar-receita':
 
-    require_once '../app/controllers/ReceitaController.php';
+                require_once '../app/controllers/ReceitaController.php';
 
-    $controller = new ReceitaController();
-    $controller->atualizar();
+                $controller = new ReceitaController();
+                $controller->atualizar();
 
-    break;
+            break;
 
-    case 'excluir-receita':
+            case 'excluir-receita':
 
-    require_once '../app/controllers/ReceitaController.php';
+                require_once '../app/controllers/ReceitaController.php';
 
-    $controller = new ReceitaController();
-    $controller->excluir();
+                $controller = new ReceitaController();
+                $controller->excluir();
 
-break;
-        case 'logout':
+            break;
 
-    require_once '../app/controllers/AuthController.php';
+            // USUÁRIOS
+            case 'usuarios':
 
-    $controller = new AuthController();
-    $controller->logout();
+                require_once '../app/controllers/UsuarioController.php';
 
-break;
+                $controller = new UsuarioController();
+                $controller->index();
+
+            break;
+
+            case 'editar-usuario':
+
+                require_once '../app/controllers/UsuarioController.php';
+
+                $controller = new UsuarioController();
+                $controller->editar();
+
+            break;
+
+            case 'atualizar-usuario':
+
+                require_once '../app/controllers/UsuarioController.php';
+
+                $controller = new UsuarioController();
+                $controller->atualizar();
+
+            break;
+
+            case 'excluir-usuario':
+
+                require_once '../app/controllers/UsuarioController.php';
+
+                $controller = new UsuarioController();
+                $controller->excluir();
+
+            break;
+
+            // CATEGORIAS
+            case 'categorias':
+
+                require_once '../app/controllers/CategoriaController.php';
+
+                $controller = new CategoriaController();
+                $controller->index();
+
+            break;
+
+            case 'criar-categoria':
+
+                require_once '../app/controllers/CategoriaController.php';
+
+                $controller = new CategoriaController();
+                $controller->criar();
+
+            break;
+
+            case 'salvar-categoria':
+
+                require_once '../app/controllers/CategoriaController.php';
+
+                $controller = new CategoriaController();
+                $controller->salvar();
+
+            break;
+
+            case 'editar-categoria':
+
+                require_once '../app/controllers/CategoriaController.php';
+
+                $controller = new CategoriaController();
+                $controller->editar();
+
+            break;
+
+            case 'atualizar-categoria':
+
+                require_once '../app/controllers/CategoriaController.php';
+
+                $controller = new CategoriaController();
+                $controller->atualizar();
+
+            break;
+
+            case 'excluir-categoria':
+
+                require_once '../app/controllers/CategoriaController.php';
+
+                $controller = new CategoriaController();
+                $controller->excluir();
+
+            break;
+
+            case 'recuperar-senha':
+
+            require_once '../app/controllers/AuthController.php';
+
+            $controller = new AuthController();
+            $controller->recuperarSenha();
+
+            break;
+
+            case 'alterar-senha':
+
+            require_once '../app/controllers/AuthController.php';
+
+            $controller = new AuthController();
+            $controller->alterarSenha();
+
+            break;
 
             default:
 

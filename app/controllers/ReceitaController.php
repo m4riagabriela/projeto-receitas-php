@@ -2,26 +2,41 @@
 
 require_once '../app/core/Controller.php';
 require_once '../app/models/Receita.php';
+require_once '../app/models/Categoria.php';
 
-class ReceitaController extends Controller {
-
-    public function criar() {
-
-        if(!isset($_SESSION['usuario'])) {
+class ReceitaController extends Controller
+{
+    public function criar()
+    {
+        if (!isset($_SESSION['usuario'])) {
             header('Location: ?url=login');
             exit;
         }
 
-        $this->view('criar-receita');
+        $categoria = new Categoria();
+
+        $categorias = $categoria->listar();
+
+        $this->view('criar-receita', [
+            'categorias' => $categorias
+        ]);
     }
 
-    public function salvar() {
+    public function salvar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (
+                !isset($_POST['csrf_token']) ||
+                $_POST['csrf_token'] !== $_SESSION['csrf_token']
+            ) {
+                die('Token CSRF inválido.');
+            }
 
             $titulo = $_POST['titulo'];
             $descricao = $_POST['descricao'];
             $modo_preparo = $_POST['modo_preparo'];
+            $categoria_id = $_POST['categoria_id'];
 
             $usuario_id = $_SESSION['usuario']['id'];
 
@@ -31,7 +46,8 @@ class ReceitaController extends Controller {
                 $titulo,
                 $descricao,
                 $modo_preparo,
-                $usuario_id
+                $usuario_id,
+                $categoria_id
             );
 
             header('Location: ?url=receitas');
@@ -39,8 +55,8 @@ class ReceitaController extends Controller {
         }
     }
 
-    public function index() {
-
+    public function index()
+    {
         $receita = new Receita();
 
         $receitas = $receita->listar();
@@ -50,9 +66,9 @@ class ReceitaController extends Controller {
         ]);
     }
 
-    public function minhas() {
-
-        if(!isset($_SESSION['usuario'])) {
+    public function minhas()
+    {
+        if (!isset($_SESSION['usuario'])) {
             header('Location: ?url=login');
             exit;
         }
@@ -67,47 +83,61 @@ class ReceitaController extends Controller {
             'receitas' => $receitas
         ]);
     }
-    public function editar() {
 
+    public function editar()
+{
     $id = $_GET['id'];
 
     $receita = new Receita();
-
     $dados = $receita->buscarPorId($id);
 
+    $categoria = new Categoria();
+    $categorias = $categoria->listar();
+
     $this->view('editar-receita', [
-        'receita' => $dados
+        'receita' => $dados,
+        'categorias' => $categorias
     ]);
 }
-public function atualizar() {
 
-    $id = $_POST['id'];
+    public function atualizar()
+    {
+        if (
+            !isset($_POST['csrf_token']) ||
+            $_POST['csrf_token'] !== $_SESSION['csrf_token']
+        ) {
+            die('Token CSRF inválido.');
+        }
 
-    $titulo = $_POST['titulo'];
-    $descricao = $_POST['descricao'];
-    $modo_preparo = $_POST['modo_preparo'];
+        $id = $_POST['id'];
+        $titulo = $_POST['titulo'];
+        $descricao = $_POST['descricao'];
+        $modo_preparo = $_POST['modo_preparo'];
+        $categoria_id = $_POST['categoria_id'];
 
-    $receita = new Receita();
+        $receita = new Receita();
 
-    $receita->atualizar(
-        $id,
-        $titulo,
-        $descricao,
-        $modo_preparo
-    );
+        $receita->atualizar(
+            $id,
+            $titulo,
+            $descricao,
+            $modo_preparo,
+            $categoria_id
+        );
 
-    header('Location: ?url=minhas-receitas');
-    exit;
-}
-public function excluir() {
+        header('Location: ?url=minhas-receitas');
+        exit;
+    }
 
-    $id = $_GET['id'];
+    public function excluir()
+    {
+        $id = $_GET['id'];
 
-    $receita = new Receita();
+        $receita = new Receita();
 
-    $receita->excluir($id);
+        $receita->excluir($id);
 
-    header('Location: ?url=minhas-receitas');
-    exit;
-}
+        header('Location: ?url=minhas-receitas');
+        exit;
+    }
 }

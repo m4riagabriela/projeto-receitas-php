@@ -26,6 +26,12 @@
 
 <form action="?url=atualizar-receita" method="POST">
 
+    <input
+    type="hidden"
+    name="csrf_token"
+    value="<?= $_SESSION['csrf_token'] ?>"
+>
+
     <input type="hidden"
            name="id"
            value="<?= $receita['id'] ?>">
@@ -44,6 +50,20 @@
 
     <br><br>
 
+    <select name="categoria_id" required>
+
+    <?php foreach($categorias as $categoria): ?>
+
+        <option
+            value="<?= $categoria['id'] ?>"
+            <?= $categoria['id'] == $receita['categoria_id'] ? 'selected' : '' ?>
+        >
+            <?= $categoria['nome'] ?>
+        </option>
+
+    <?php endforeach; ?>
+
+</select>
     <button type="submit">
         Atualizar
     </button>
